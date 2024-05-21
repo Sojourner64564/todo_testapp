@@ -19,7 +19,41 @@ class TodoListScreen extends StatelessWidget {
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () {},
+        onPressed: () {
+          showDialog<String>(
+            context: context,
+            builder: (BuildContext context) => AlertDialog(
+              content: TextField(
+                keyboardType: TextInputType.multiline,
+                maxLines: null,
+                decoration: InputDecoration(
+                  hintText: 'Enter your todo',
+                  enabledBorder: OutlineInputBorder(
+                    borderSide:  const BorderSide(color: MyColors.grey2Color),
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                  focusedBorder: OutlineInputBorder(
+                    borderSide:  const BorderSide(
+                      color: MyColors.buttonAddColor,
+                      width: 2,
+                    ),
+                    borderRadius: BorderRadius.circular(15),
+                  ),
+                ),
+              ),
+              actions: <Widget>[
+                TextButton(
+                  onPressed: () => Navigator.pop(context, 'OK'),
+                  child: const Text('Cancel'),
+                ),
+                TextButton(
+                  onPressed: () => Navigator.pop(context, 'OK'),
+                  child: const Text('Save'),
+                ),
+              ],
+            ),
+          );
+        },
         backgroundColor: MyColors.buttonAddColor,
         child: const Icon(
           Icons.add,
@@ -27,7 +61,7 @@ class TodoListScreen extends StatelessWidget {
           color: MyColors.whiteColor,
         ),
       ),
-      body: const TodoListPage(),
+      body: TodoListPage(),
     );
   }
 }
