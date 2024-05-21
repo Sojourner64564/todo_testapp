@@ -24,7 +24,7 @@ class TodoListPage extends StatelessWidget {
 
               }
               if(state is RefreshTodosStateLoaded){
-                return ListView.builder(//
+                return ListView.builder(//+
                   itemCount: state.todoList.length,
                   itemBuilder: (BuildContext context, int index) {
                     return TodoTileWidget(todoModel: state.todoList[index],);
