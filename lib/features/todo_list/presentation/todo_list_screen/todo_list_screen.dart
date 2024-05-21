@@ -20,6 +20,12 @@ class TodoListScreen extends StatelessWidget {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {},
+        backgroundColor: MyColors.buttonAddColor,
+        child: const Icon(
+          Icons.add,
+          size: 30,
+          color: MyColors.whiteColor,
+        ),
       ),
       body: const TodoListPage(),
     );
