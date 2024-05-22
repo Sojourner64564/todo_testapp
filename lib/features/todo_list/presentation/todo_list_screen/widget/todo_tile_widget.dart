@@ -5,6 +5,7 @@ import 'package:todo_testapp/core/injectable/injectable.dart';
 import 'package:todo_testapp/core/my_colors/my_colors.dart';
 import 'package:todo_testapp/core/my_text_styles/my_text_styles.dart';
 import 'package:todo_testapp/features/todo_list/data/models/todo_model.dart';
+import 'package:todo_testapp/features/todo_list/presentation/controller/check_todo_controller.dart';
 import 'package:todo_testapp/features/todo_list/presentation/controller/delete_todo_controller.dart';
 import 'package:todo_testapp/features/todo_list/presentation/cubit/checkbox_cubit/checkbox_cubit.dart';
 
@@ -20,6 +21,7 @@ class TodoTileWidget extends StatefulWidget {
 class _TodoTileWidgetState extends State<TodoTileWidget> {
   final deleteTodoController = getIt<DeleteTodoController>();
   final checkboxCubit = getIt<CheckboxCubit>();
+  final checkTodoController = getIt<CheckTodoController>();
 
   @override
   void initState() {
@@ -96,7 +98,7 @@ class _TodoTileWidgetState extends State<TodoTileWidget> {
                   children: [
                     GestureDetector(
                       onTap: () {
-
+                        checkTodoController.checkTodo(widget.todoModel.id);
                       },
                       child: BlocBuilder<CheckboxCubit, CheckboxState>(
                         bloc: checkboxCubit,
@@ -129,7 +131,7 @@ class _TodoTileWidgetState extends State<TodoTileWidget> {
                               width: 40,
                               decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(50),
-                                color: Colors.white,
+                                color: Colors.green,
                               ),
                             );
                           }

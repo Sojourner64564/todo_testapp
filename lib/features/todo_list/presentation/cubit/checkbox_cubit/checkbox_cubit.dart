@@ -9,10 +9,10 @@ class CheckboxCubit extends Cubit<CheckboxState> {
   CheckboxCubit() : super(CheckboxIsNotDone());
 
   Future<void> initCheckbox(bool isDone) async{
-    if(isDone){
+    if(isDone == true){
       emit(CheckboxIsDone());
     }
-    if(!isDone){
+    if(isDone == false){
       emit(CheckboxIsNotDone());
     }
   }

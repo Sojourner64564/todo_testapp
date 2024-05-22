@@ -17,6 +17,7 @@ class TodoModelDataSourceLocalImpl implements TodoModelDataSourceLocal {
   Future<void> doneCheckbox(int id) async{
     final database = getIt<AppDatabase>();
     database.update(database.todoItems).where((tbl) => tbl.id.isValue(id));
+    
   }
 
   @override
