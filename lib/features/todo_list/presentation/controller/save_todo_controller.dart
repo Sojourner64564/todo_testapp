@@ -11,7 +11,7 @@ class SaveTodoController{
 
   Future<void> saveTodo(String content) async{
     final response = await todoUsecase.saveModelToBd(content);
-    //TODO сделать обратной связи
+    //TODO сделать обратную связь с сейвРеспонс
     refreshTodosCubit.refreshAllTodos();
   }
 }

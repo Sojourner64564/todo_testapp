@@ -7,6 +7,11 @@ class MyTextStyles{
     fontWeight: FontWeight.w700,
     fontSize: 30,
   );
+  static const title2 = TextStyle(
+    color: MyColors.whiteColor,
+    fontWeight: FontWeight.w500,
+    fontSize: 20,
+  );
   static const text1 = TextStyle(
     color: MyColors.whiteColor,
     fontWeight: FontWeight.w400,

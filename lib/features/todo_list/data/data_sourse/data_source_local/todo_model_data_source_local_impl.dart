@@ -20,10 +20,15 @@ class TodoModelDataSourceLocalImpl implements TodoModelDataSourceLocal {
 
   @override
   Future<List<TodoModel>> loadAllTodo() async{
+    print('-----------------------1');
     final database = getIt<AppDatabase>();
+    print('-----------------------2');
     final dbTodos = await database.select(database.todoItems).get();
+    print('-----------------------3');
     List<TodoModel> todoList = [];
+    print('-----------------------4');
     for(final todoItemsElement in dbTodos){
+      print('-----------------------ROtatin');
       todoList.add(
           TodoModel(
             id: todoItemsElement.id,

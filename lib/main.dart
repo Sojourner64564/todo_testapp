@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:todo_testapp/core/injectable/injectable.dart';
 import 'package:todo_testapp/features/todo_list/presentation/todo_list_screen/todo_list_screen.dart';
 
 void main() {
+  configureDependencies();
   runApp(const MyApp());
 }
 
@@ -10,7 +12,7 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
+    return MaterialApp(
       home: TodoListScreen(),
     );
   }

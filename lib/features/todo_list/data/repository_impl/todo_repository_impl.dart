@@ -2,15 +2,15 @@ import 'package:dartz/dartz.dart';
 import 'package:injectable/injectable.dart';
 import 'package:todo_testapp/core/enums/save_response.dart';
 import 'package:todo_testapp/core/error/failure.dart';
-import 'package:todo_testapp/features/todo_list/data/data_sourse/data_source_local/todo_model_data_source_local_impl.dart';
+import 'package:todo_testapp/features/todo_list/data/data_sourse/data_source_local/todo_model_data_source_local.dart';
 import 'package:todo_testapp/features/todo_list/data/models/todo_model.dart';
 import 'package:todo_testapp/features/todo_list/domain/repository/todo_repository.dart';
 
 @LazySingleton(as: TodoRepository)
 class TodoRepositoryImpl implements TodoRepository{
-  TodoRepositoryImpl(this.todoModelDataSourceLocalImpl);
+  TodoRepositoryImpl(this.todoModelDataSourceLocal);
 
-  final TodoModelDataSourceLocalImpl todoModelDataSourceLocalImpl;
+  final TodoModelDataSourceLocal todoModelDataSourceLocal;
 
   @override
   Future<List<TodoModel>> deleteTodo(int id) {
@@ -26,8 +26,11 @@ class TodoRepositoryImpl implements TodoRepository{
 
   @override
   Future<Either<Failure, List<TodoModel>>> loadAllTodo() async{
+    final response = await todoModelDataSourceLocal.loadAllTodo();
+
+
     try{
-      final response = await todoModelDataSourceLocalImpl.loadAllTodo();
+      final response = await todoModelDataSourceLocal.loadAllTodo();
       return Right(response);
     }catch(e){
       return Left(DatabaseFailure());
@@ -37,7 +40,7 @@ class TodoRepositoryImpl implements TodoRepository{
   @override
   Future<Either<Failure, SaveResponse>> saveModelToBd(String content) async{
     try{
-      await todoModelDataSourceLocalImpl.saveModelToBd(content);
+      await todoModelDataSourceLocal.saveModelToBd(content);
       return const Right(SaveResponse.saved);
     }catch(e){
       return Left(DatabaseFailure());
