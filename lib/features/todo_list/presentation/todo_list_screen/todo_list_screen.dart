@@ -34,11 +34,11 @@ class TodoListScreen extends StatelessWidget {
                 decoration: InputDecoration(
                   hintText: 'Enter your todo',
                   enabledBorder: OutlineInputBorder(
-                    borderSide:  const BorderSide(color: MyColors.grey2Color),
+                    borderSide: const BorderSide(color: MyColors.grey2Color),
                     borderRadius: BorderRadius.circular(10),
                   ),
                   focusedBorder: OutlineInputBorder(
-                    borderSide:  const BorderSide(
+                    borderSide: const BorderSide(
                       color: MyColors.buttonAddColor,
                       width: 2,
                     ),
@@ -49,14 +49,14 @@ class TodoListScreen extends StatelessWidget {
               actions: <Widget>[
                 TextButton(
                   onPressed: () {
-          Navigator.pop(context, 'OK') ;
-          },
+                    Navigator.pop(context, 'OK');
+                  },
                   child: const Text('Cancel'),
                 ),
                 TextButton(
                   onPressed: () {
                     saveTodoController.saveTodo(textEditingController.text);
-                        Navigator.pop(context);
+                    Navigator.pop(context);
                   },
                   child: const Text('Save'),
                 ),

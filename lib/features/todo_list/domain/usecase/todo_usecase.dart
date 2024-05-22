@@ -1,5 +1,7 @@
 import 'package:dartz/dartz.dart';
 import 'package:injectable/injectable.dart';
+import 'package:todo_testapp/core/enums/checkbox_response.dart';
+import 'package:todo_testapp/core/enums/deleted_response.dart';
 import 'package:todo_testapp/core/enums/save_response.dart';
 import 'package:todo_testapp/core/error/failure.dart';
 import 'package:todo_testapp/features/todo_list/data/models/todo_model.dart';
@@ -12,15 +14,13 @@ class TodoUsecase implements TodoRepository{
   final TodoRepository todoRepository;
 
   @override
-  Future<List<TodoModel>> deleteTodo(int id) {
-    // TODO: implement deleteTodo
-    throw UnimplementedError();
+  Future<Either<Failure, DeletedResponse>> deleteTodo(int id) async{
+    return await todoRepository.deleteTodo(id);
   }
 
   @override
-  Future<List<TodoModel>> doneCheckbox(int id) {
-    // TODO: implement doneCheckbox
-    throw UnimplementedError();
+  Future<Either<Failure, CheckboxResponse>> doneCheckbox(int id) async{
+    return await todoRepository.doneCheckbox(id);
   }
 
   @override

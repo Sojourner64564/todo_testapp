@@ -1,5 +1,7 @@
 import 'package:dartz/dartz.dart';
 import 'package:injectable/injectable.dart';
+import 'package:todo_testapp/core/enums/checkbox_response.dart';
+import 'package:todo_testapp/core/enums/deleted_response.dart';
 import 'package:todo_testapp/core/enums/save_response.dart';
 import 'package:todo_testapp/core/error/failure.dart';
 import 'package:todo_testapp/features/todo_list/data/data_sourse/data_source_local/todo_model_data_source_local.dart';
@@ -13,24 +15,38 @@ class TodoRepositoryImpl implements TodoRepository{
   final TodoModelDataSourceLocal todoModelDataSourceLocal;
 
   @override
-  Future<List<TodoModel>> deleteTodo(int id) {
-    // TODO: implement deleteTodo
-    throw UnimplementedError();
+  Future<Either<Failure, DeletedResponse>> deleteTodo(int id) async{
+    try{
+      await todoModelDataSourceLocal.deleteTodo(id);
+      return const Right(DeletedResponse.deleted);
+    }catch(e){
+      return Left(DatabaseFailure());
+    }
   }
 
   @override
-  Future<List<TodoModel>> doneCheckbox(int id) {
-    // TODO: implement doneCheckbox
-    throw UnimplementedError();
+  Future<Either<Failure, CheckboxResponse>> doneCheckbox(int id) async{
+    try{
+      await todoModelDataSourceLocal.doneCheckbox(id);
+      return const Right(CheckboxResponse.checked);
+    }catch(e){
+      return Left(DatabaseFailure());
+    }
   }
 
   @override
   Future<Either<Failure, List<TodoModel>>> loadAllTodo() async{
-    final response = await todoModelDataSourceLocal.loadAllTodo();
-
-
     try{
       final response = await todoModelDataSourceLocal.loadAllTodo();
+     /* List<TodoModel> todoList = [];
+      for(final todoElement in response){
+        todoList.add(TodoModel(
+          id: todoElement.id,
+          text: todoElement.text ?? '',
+          isDone: todoElement.isDone,
+        ),
+        );
+      }*/
       return Right(response);
     }catch(e){
       return Left(DatabaseFailure());

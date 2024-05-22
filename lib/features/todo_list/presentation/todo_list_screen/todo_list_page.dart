@@ -29,29 +29,55 @@ class _TodoListPageState extends State<TodoListPage> {
           child: BlocBuilder<RefreshTodosCubit, RefreshTodosState>(
             bloc: refreshTodosCubit,
             builder: (context, state) {
-              if(state is RefreshTodosStateInitial){
-                return const Center(child: Text('Initial', style: MyTextStyles.title2,),);
+              if (state is RefreshTodosStateInitial) {
+                return const Center(
+                  child: Text(
+                    'Initial',
+                    style: MyTextStyles.title2,
+                  ),
+                );
               }
-              if(state is RefreshTodosStateLoading){
-                return const Center(child: Text('Loading', style: MyTextStyles.title2,),);
+              if (state is RefreshTodosStateLoading) {
+                return const Center(
+                  child: Text(
+                    'Loading',
+                    style: MyTextStyles.title2,
+                  ),
+                );
               }
-              if(state is RefreshTodosStateLoaded){
+              if (state is RefreshTodosStateLoaded) {
                 return ListView.builder(
                   itemCount: state.todoList.length,
                   itemBuilder: (BuildContext context, int index) {
-                    return TodoTileWidget(todoModel: state.todoList[index],);
+                    return TodoTileWidget(
+                      todoModel: state.todoList[index],
+                    );
                   },
                 );
               }
-              if(state is RefreshTodosStateEmpty){
-                return const Center(child: Text('Empty', style: MyTextStyles.title2,),);
+              if (state is RefreshTodosStateEmpty) {
+                return const Center(
+                  child: Text(
+                    'Empty',
+                    style: MyTextStyles.title2,
+                  ),
+                );
               }
-              if(state is RefreshTodosStateError){
-                return const Center(child: Text('Database error', style: MyTextStyles.title2,),);
-              }else{
-                return const Center(child: Text('Unexpected Error', style: MyTextStyles.title2,),);
+              if (state is RefreshTodosStateError) {
+                return const Center(
+                  child: Text(
+                    'Database error',
+                    style: MyTextStyles.title2,
+                  ),
+                );
+              } else {
+                return const Center(
+                  child: Text(
+                    'Unexpected Error',
+                    style: MyTextStyles.title2,
+                  ),
+                );
               }
-
             },
           ),
         ),
