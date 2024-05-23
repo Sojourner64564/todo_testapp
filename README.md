@@ -1,16 +1,11 @@
 # todo_testapp
 
-A new Flutter project.
+##Задейственные технологии: flutter_bloc, drift, get it, injectable, clean architecture
 
-## Getting Started
 
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+##Скриншоты программы
+![image](https://media.discordapp.net/attachments/534362917685166103/1243270583001546782/Screenshot_20240523-233314.jpg?ex=6650dd75&is=664f8bf5&hm=83b61058ee5339a2414228178a8ea152e7e7ade02fbeb7574f68b44a52da84dd&=&format=webp&width=320&height=676)
+![image](https://media.discordapp.net/attachments/534362917685166103/1243270509039456376/Screenshot_20240523-233111.jpg?ex=6650dd64&is=664f8be4&hm=f58c02d85331f38154cc88dc2b5b3753ef99c88173d6bf84e690ac429933d80d&=&format=webp&width=320&height=676)
+![image](https://media.discordapp.net/attachments/534362917685166103/1243271728407253154/Screenshot_20240523-233746.jpg?ex=6650de86&is=664f8d06&hm=48af4052294169dfb033cd57c82ecf51131182f569ac2fdfe8e2ec8ec6a41ea8&=&format=webp&width=320&height=676)
+![image](https://media.discordapp.net/attachments/534362917685166103/1243271947140468906/Screenshot_20240523-233835.jpg?ex=6650debb&is=664f8d3b&hm=9747ed3f9b9eae87cac90d8e8494278d5846055fc842747cf5a7295fffd33ded&=&format=webp&width=320&height=676)
+![image](https://media.discordapp.net/attachments/534362917685166103/1243271953373069363/Screenshot_20240523-233840.jpg?ex=6650debc&is=664f8d3c&hm=a4b44da0e9bc79441a73c49024ec4c2fefeaa73f6857c075cab7d914e55b9416&=&format=webp&width=320&height=676)
