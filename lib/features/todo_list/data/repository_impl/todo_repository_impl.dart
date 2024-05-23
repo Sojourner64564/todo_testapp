@@ -9,58 +9,53 @@ import 'package:todo_testapp/features/todo_list/data/models/todo_model.dart';
 import 'package:todo_testapp/features/todo_list/domain/repository/todo_repository.dart';
 
 @LazySingleton(as: TodoRepository)
-class TodoRepositoryImpl implements TodoRepository{
+class TodoRepositoryImpl implements TodoRepository {
   TodoRepositoryImpl(this.todoModelDataSourceLocal);
 
   final TodoModelDataSourceLocal todoModelDataSourceLocal;
 
   @override
-  Future<Either<Failure, DeletedResponse>> deleteTodo(int id) async{
-    try{
+  Future<Either<Failure, DeletedResponse>> deleteTodo(int id) async {
+    try {
       await todoModelDataSourceLocal.deleteTodo(id);
       return const Right(DeletedResponse.deleted);
-    }catch(e){
+    } catch (e) {
       return Left(DatabaseFailure());
     }
   }
 
   @override
-  Future<Either<Failure, CheckboxResponse>> doneCheckbox(int id) async{
-    try{
-      await todoModelDataSourceLocal.doneCheckbox(id);
+  Future<Either<Failure, CheckboxResponse>> changeTodo(
+      TodoModel todoModel) async {
+    try {
+      await todoModelDataSourceLocal.changeTodo(
+        todoModel.id,
+        todoModel.text,
+        !todoModel.isDone, //меняем оператором ! на противоположный
+      );
       return const Right(CheckboxResponse.checked);
-    }catch(e){
+    } catch (e) {
       return Left(DatabaseFailure());
     }
   }
 
   @override
-  Future<Either<Failure, List<TodoModel>>> loadAllTodo() async{
-    try{
+  Future<Either<Failure, List<TodoModel>>> loadAllTodo() async {
+    try {
       final response = await todoModelDataSourceLocal.loadAllTodo();
-     /* List<TodoModel> todoList = [];
-      for(final todoElement in response){
-        todoList.add(TodoModel(
-          id: todoElement.id,
-          text: todoElement.text ?? '',
-          isDone: todoElement.isDone,
-        ),
-        );
-      }*/
       return Right(response);
-    }catch(e){
+    } catch (e) {
       return Left(DatabaseFailure());
     }
   }
 
   @override
-  Future<Either<Failure, SaveResponse>> saveModelToBd(String content) async{
-    try{
+  Future<Either<Failure, SaveResponse>> saveModelToBd(String content) async {
+    try {
       await todoModelDataSourceLocal.saveModelToBd(content);
       return const Right(SaveResponse.saved);
-    }catch(e){
+    } catch (e) {
       return Left(DatabaseFailure());
     }
   }
-  
 }

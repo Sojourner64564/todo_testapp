@@ -14,10 +14,14 @@ class TodoModelDataSourceLocalImpl implements TodoModelDataSourceLocal {
   }
 
   @override
-  Future<void> doneCheckbox(int id) async{
+  Future<void> changeTodo(int id, String content, bool isDone) async{
     final database = getIt<AppDatabase>();
-    database.update(database.todoItems).where((tbl) => tbl.id.isValue(id));
-    
+    await database.update(database.todoItems).replace(TodoItemsCompanion(
+      id: Value(id),
+      content: Value(content),
+      isDone: Value(isDone),
+    ),
+    );
   }
 
   @override

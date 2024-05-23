@@ -8,6 +8,6 @@ import 'package:dartz/dartz.dart';
 abstract class TodoRepository{
   Future<Either<Failure, SaveResponse>> saveModelToBd(String content);
   Future<Either<Failure, List<TodoModel>>> loadAllTodo();
-  Future<Either<Failure, CheckboxResponse>> doneCheckbox(int id);
+  Future<Either<Failure, CheckboxResponse>> changeTodo(TodoModel todoModel);
   Future<Either<Failure, DeletedResponse>> deleteTodo(int id);
 }

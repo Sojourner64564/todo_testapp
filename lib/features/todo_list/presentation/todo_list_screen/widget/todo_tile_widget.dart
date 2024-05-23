@@ -9,28 +9,17 @@ import 'package:todo_testapp/features/todo_list/presentation/controller/check_to
 import 'package:todo_testapp/features/todo_list/presentation/controller/delete_todo_controller.dart';
 import 'package:todo_testapp/features/todo_list/presentation/cubit/checkbox_cubit/checkbox_cubit.dart';
 
-class TodoTileWidget extends StatefulWidget {
-  const TodoTileWidget({super.key, required this.todoModel});
+class TodoTileWidget extends StatelessWidget {
+  TodoTileWidget({super.key, required this.todoModel});
 
   final TodoModel todoModel;
-
-  @override
-  State<TodoTileWidget> createState() => _TodoTileWidgetState();
-}
-
-class _TodoTileWidgetState extends State<TodoTileWidget> {
   final deleteTodoController = getIt<DeleteTodoController>();
   final checkboxCubit = getIt<CheckboxCubit>();
   final checkTodoController = getIt<CheckTodoController>();
 
   @override
-  void initState() {
-    checkboxCubit.initCheckbox(widget.todoModel.isDone);
-    super.initState();
-  }
-
-  @override
   Widget build(BuildContext context) {
+    checkboxCubit.initCheckbox(todoModel.isDone);
     return Padding(
       padding: const EdgeInsets.fromLTRB(0, 0, 0, 20),
       child: Slidable(
@@ -38,8 +27,8 @@ class _TodoTileWidgetState extends State<TodoTileWidget> {
           motion: const ScrollMotion(),
           children: [
             SlidableAction(
-              onPressed: (context){
-                deleteTodoController.deleteTodo(widget.todoModel.id);
+              onPressed: (context) {
+                deleteTodoController.deleteTodo(todoModel.id);
               },
               borderRadius: BorderRadius.circular(20),
               backgroundColor: MyColors.redColor,
@@ -55,34 +44,33 @@ class _TodoTileWidgetState extends State<TodoTileWidget> {
             onTap: () {
               showDialog<String>(
                 context: context,
-                builder: (BuildContext context) =>
-                    AlertDialog(
-                      content: TextField(
-                        keyboardType: TextInputType.multiline,
-                        maxLines: null,
-                        decoration: InputDecoration(
-                          hintText: 'Enter your todo',
-                          enabledBorder: OutlineInputBorder(
-                            borderSide: const BorderSide(
-                                color: MyColors.grey2Color),
-                            borderRadius: BorderRadius.circular(10),
-                          ),
-                          focusedBorder: OutlineInputBorder(
-                            borderSide: const BorderSide(
-                              color: MyColors.buttonAddColor,
-                              width: 2,
-                            ),
-                            borderRadius: BorderRadius.circular(15),
-                          ),
-                        ),
+                builder: (BuildContext context) => AlertDialog(
+                  content: TextField(
+                    keyboardType: TextInputType.multiline,
+                    maxLines: null,
+                    decoration: InputDecoration(
+                      hintText: 'Enter your todo',
+                      enabledBorder: OutlineInputBorder(
+                        borderSide:
+                            const BorderSide(color: MyColors.grey2Color),
+                        borderRadius: BorderRadius.circular(10),
                       ),
-                      actions: <Widget>[
-                        TextButton(
-                          onPressed: () => Navigator.pop(context),
-                          child: const Text('Save'),
+                      focusedBorder: OutlineInputBorder(
+                        borderSide: const BorderSide(
+                          color: MyColors.buttonAddColor,
+                          width: 2,
                         ),
-                      ],
+                        borderRadius: BorderRadius.circular(15),
+                      ),
                     ),
+                  ),
+                  actions: <Widget>[
+                    TextButton(
+                      onPressed: () => Navigator.pop(context),
+                      child: const Text('Save'),
+                    ),
+                  ],
+                ),
               );
             },
             child: Container(
@@ -98,44 +86,45 @@ class _TodoTileWidgetState extends State<TodoTileWidget> {
                   children: [
                     GestureDetector(
                       onTap: () {
-                        checkTodoController.checkTodo(widget.todoModel.id);
+                        checkTodoController.checkTodo(todoModel);
                       },
                       child: BlocBuilder<CheckboxCubit, CheckboxState>(
                         bloc: checkboxCubit,
                         builder: (context, state) {
-                          if(state is CheckboxIsDone){
+                          if (state is CheckboxIsDone) {
                             return Container(
                               height: 40,
                               width: 40,
                               decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(50),
+                                color: MyColors.greenColor,
+                              ),
+                              child: const Icon(
+                                Icons.check,
                                 color: MyColors.whiteColor,
-                                  border: Border.all(color: Colors.red, width: 4)
                               ),
-                              child: const Icon(Icons.check),
                             );
                           }
-                          if(state is CheckboxIsNotDone){
+                          if (state is CheckboxIsNotDone) {
+                            return Container(
+                              height: 40,
+                              width: 40,
+                              decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(50),
+                                  color: Colors.white,
+                                  border: Border.all(
+                                      color: MyColors.grey2Color, width: 2)),
+                            );
+                          } else {
                             return Container(
                               height: 40,
                               width: 40,
                               decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(50),
-                                color: Colors.white,
-                                  border: Border.all(color: MyColors.grey2Color, width: 4)
-                              ),
-                            );
-                          }else{
-                            return Container(
-                              height: 40,
-                              width: 40,
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(50),
-                                color: Colors.green,
+                                color: MyColors.redColor,
                               ),
                             );
                           }
-
                         },
                       ),
                     ),
@@ -143,7 +132,7 @@ class _TodoTileWidgetState extends State<TodoTileWidget> {
                     SizedBox(
                       width: 250,
                       child: Text(
-                        widget.todoModel.text,
+                        todoModel.text,
                         overflow: TextOverflow.ellipsis,
                         maxLines: 2,
                         style: MyTextStyles.text1,
@@ -155,7 +144,8 @@ class _TodoTileWidgetState extends State<TodoTileWidget> {
                       size: 20,
                       color: MyColors.greyColor,
                     ),
-                    const Icon(Icons.delete,
+                    const Icon(
+                      Icons.delete,
                       size: 20,
                       color: MyColors.greyColor,
                     )

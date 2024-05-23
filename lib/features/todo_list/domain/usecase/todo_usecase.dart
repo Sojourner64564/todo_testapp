@@ -19,8 +19,8 @@ class TodoUsecase implements TodoRepository{
   }
 
   @override
-  Future<Either<Failure, CheckboxResponse>> doneCheckbox(int id) async{
-    return await todoRepository.doneCheckbox(id);
+  Future<Either<Failure, CheckboxResponse>> changeTodo(TodoModel todoModel) async{
+    return await todoRepository.changeTodo(todoModel);
   }
 
   @override
