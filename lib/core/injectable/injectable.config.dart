@@ -21,6 +21,8 @@ import '../../features/todo_list/data/repository_impl/todo_repository_impl.dart'
     as _i8;
 import '../../features/todo_list/domain/repository/todo_repository.dart' as _i7;
 import '../../features/todo_list/domain/usecase/todo_usecase.dart' as _i9;
+import '../../features/todo_list/presentation/controller/change_todo_controller.dart'
+    as _i14;
 import '../../features/todo_list/presentation/controller/check_todo_controller.dart'
     as _i13;
 import '../../features/todo_list/presentation/controller/delete_todo_controller.dart'
@@ -62,6 +64,10 @@ _i1.GetIt $initGetIt(
         gh<_i10.RefreshTodosCubit>(),
       ));
   gh.lazySingleton<_i13.CheckTodoController>(() => _i13.CheckTodoController(
+        gh<_i9.TodoUsecase>(),
+        gh<_i10.RefreshTodosCubit>(),
+      ));
+  gh.lazySingleton<_i14.ChangeTodoController>(() => _i14.ChangeTodoController(
         gh<_i9.TodoUsecase>(),
         gh<_i10.RefreshTodosCubit>(),
       ));

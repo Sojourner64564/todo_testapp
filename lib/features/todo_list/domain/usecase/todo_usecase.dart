@@ -1,5 +1,6 @@
 import 'package:dartz/dartz.dart';
 import 'package:injectable/injectable.dart';
+import 'package:todo_testapp/core/enums/change_response.dart';
 import 'package:todo_testapp/core/enums/checkbox_response.dart';
 import 'package:todo_testapp/core/enums/deleted_response.dart';
 import 'package:todo_testapp/core/enums/save_response.dart';
@@ -14,12 +15,12 @@ class TodoUsecase implements TodoRepository{
   final TodoRepository todoRepository;
 
   @override
-  Future<Either<Failure, DeletedResponse>> deleteTodo(int id) async{
-    return await todoRepository.deleteTodo(id);
+  Future<Either<Failure, DeletedResponse>> deleteTodo(TodoModel todoModel) async{
+    return await todoRepository.deleteTodo(todoModel);
   }
 
   @override
-  Future<Either<Failure, CheckboxResponse>> changeTodo(TodoModel todoModel) async{
+  Future<Either<Failure, ChangeResponse>> changeTodo(TodoModel todoModel) async{
     return await todoRepository.changeTodo(todoModel);
   }
 
@@ -31,6 +32,11 @@ class TodoUsecase implements TodoRepository{
   @override
   Future<Either<Failure, SaveResponse>> saveModelToBd(String content) async{
     return await todoRepository.saveModelToBd(content);
+  }
+
+  @override
+  Future<Either<Failure, CheckboxResponse>> checkboxTodo(TodoModel todoModel) async{
+    return await todoRepository.checkboxTodo(todoModel);
   }
 
 }

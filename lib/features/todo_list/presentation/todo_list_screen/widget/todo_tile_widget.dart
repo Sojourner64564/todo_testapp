@@ -5,6 +5,7 @@ import 'package:todo_testapp/core/injectable/injectable.dart';
 import 'package:todo_testapp/core/my_colors/my_colors.dart';
 import 'package:todo_testapp/core/my_text_styles/my_text_styles.dart';
 import 'package:todo_testapp/features/todo_list/data/models/todo_model.dart';
+import 'package:todo_testapp/features/todo_list/presentation/controller/change_todo_controller.dart';
 import 'package:todo_testapp/features/todo_list/presentation/controller/check_todo_controller.dart';
 import 'package:todo_testapp/features/todo_list/presentation/controller/delete_todo_controller.dart';
 import 'package:todo_testapp/features/todo_list/presentation/cubit/checkbox_cubit/checkbox_cubit.dart';
@@ -16,6 +17,8 @@ class TodoTileWidget extends StatelessWidget {
   final deleteTodoController = getIt<DeleteTodoController>();
   final checkboxCubit = getIt<CheckboxCubit>();
   final checkTodoController = getIt<CheckTodoController>();
+  final textEditingController = TextEditingController();
+  final changeTodoController = getIt<ChangeTodoController>();
 
   @override
   Widget build(BuildContext context) {
@@ -28,7 +31,7 @@ class TodoTileWidget extends StatelessWidget {
           children: [
             SlidableAction(
               onPressed: (context) {
-                deleteTodoController.deleteTodo(todoModel.id);
+                deleteTodoController.deleteTodo(todoModel);
               },
               borderRadius: BorderRadius.circular(20),
               backgroundColor: MyColors.redColor,
@@ -42,10 +45,12 @@ class TodoTileWidget extends StatelessWidget {
           padding: const EdgeInsets.symmetric(horizontal: 15),
           child: GestureDetector(
             onTap: () {
+              textEditingController.text = todoModel.text;
               showDialog<String>(
                 context: context,
                 builder: (BuildContext context) => AlertDialog(
                   content: TextField(
+                    controller: textEditingController,
                     keyboardType: TextInputType.multiline,
                     maxLines: null,
                     decoration: InputDecoration(
@@ -66,7 +71,10 @@ class TodoTileWidget extends StatelessWidget {
                   ),
                   actions: <Widget>[
                     TextButton(
-                      onPressed: () => Navigator.pop(context),
+                      onPressed: () {
+                        changeTodoController.changeTodo(todoModel, textEditingController.text);
+                        Navigator.pop(context);
+                      },
                       child: const Text('Save'),
                     ),
                   ],

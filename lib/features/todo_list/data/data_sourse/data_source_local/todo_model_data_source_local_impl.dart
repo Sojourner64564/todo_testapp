@@ -8,34 +8,41 @@ import 'package:todo_testapp/features/todo_list/data/models/todo_model.dart';
 @LazySingleton(as: TodoModelDataSourceLocal)
 class TodoModelDataSourceLocalImpl implements TodoModelDataSourceLocal {
   @override
-  Future<void> deleteTodo(int id) async{
+  Future<void> deleteTodo(int id, String content, bool isDone) async {
     final database = getIt<AppDatabase>();
-    database.delete(database.todoItems).where((tbl) => tbl.id.isValue(id));
+    database.delete(database.todoItems).delete(
+          TodoItemsCompanion(
+            id: Value(id),
+            content: Value(content),
+            isDone: Value(isDone),
+          ),
+        );
   }
 
   @override
-  Future<void> changeTodo(int id, String content, bool isDone) async{
+  Future<void> changeTodo(int id, String content, bool isDone) async {
     final database = getIt<AppDatabase>();
-    await database.update(database.todoItems).replace(TodoItemsCompanion(
-      id: Value(id),
-      content: Value(content),
-      isDone: Value(isDone),
-    ),
-    );
+    await database.update(database.todoItems).replace(
+          TodoItemsCompanion(
+            id: Value(id),
+            content: Value(content),
+            isDone: Value(isDone),
+          ),
+        );
   }
 
   @override
-  Future<List<TodoModel>> loadAllTodo() async{
+  Future<List<TodoModel>> loadAllTodo() async {
     final database = getIt<AppDatabase>();
     final dbTodos = await database.select(database.todoItems).get();
     List<TodoModel> todoList = [];
-    for(final todoItemsElement in dbTodos){
+    for (final todoItemsElement in dbTodos) {
       todoList.add(
-          TodoModel(
-            id: todoItemsElement.id,
-            text: todoItemsElement.content,
-            isDone: todoItemsElement.isDone,
-          ),
+        TodoModel(
+          id: todoItemsElement.id,
+          text: todoItemsElement.content,
+          isDone: todoItemsElement.isDone,
+        ),
       );
     }
     return todoList;
@@ -52,5 +59,4 @@ class TodoModelDataSourceLocalImpl implements TodoModelDataSourceLocal {
       ),
     );
   }
-
 }

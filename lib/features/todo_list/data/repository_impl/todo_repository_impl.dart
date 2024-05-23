@@ -1,5 +1,6 @@
 import 'package:dartz/dartz.dart';
 import 'package:injectable/injectable.dart';
+import 'package:todo_testapp/core/enums/change_response.dart';
 import 'package:todo_testapp/core/enums/checkbox_response.dart';
 import 'package:todo_testapp/core/enums/deleted_response.dart';
 import 'package:todo_testapp/core/enums/save_response.dart';
@@ -15,9 +16,9 @@ class TodoRepositoryImpl implements TodoRepository {
   final TodoModelDataSourceLocal todoModelDataSourceLocal;
 
   @override
-  Future<Either<Failure, DeletedResponse>> deleteTodo(int id) async {
+  Future<Either<Failure, DeletedResponse>> deleteTodo(TodoModel todoModel) async {
     try {
-      await todoModelDataSourceLocal.deleteTodo(id);
+      await todoModelDataSourceLocal.deleteTodo(todoModel.id, todoModel.text, todoModel.isDone);
       return const Right(DeletedResponse.deleted);
     } catch (e) {
       return Left(DatabaseFailure());
@@ -25,15 +26,15 @@ class TodoRepositoryImpl implements TodoRepository {
   }
 
   @override
-  Future<Either<Failure, CheckboxResponse>> changeTodo(
+  Future<Either<Failure, ChangeResponse>> changeTodo(
       TodoModel todoModel) async {
     try {
       await todoModelDataSourceLocal.changeTodo(
         todoModel.id,
         todoModel.text,
-        !todoModel.isDone, //меняем оператором ! на противоположный
+        todoModel.isDone,
       );
-      return const Right(CheckboxResponse.checked);
+      return const Right(ChangeResponse.changed);
     } catch (e) {
       return Left(DatabaseFailure());
     }
@@ -54,6 +55,20 @@ class TodoRepositoryImpl implements TodoRepository {
     try {
       await todoModelDataSourceLocal.saveModelToBd(content);
       return const Right(SaveResponse.saved);
+    } catch (e) {
+      return Left(DatabaseFailure());
+    }
+  }
+
+  @override
+  Future<Either<Failure, CheckboxResponse>> checkboxTodo(TodoModel todoModel) async{
+    try {
+      await todoModelDataSourceLocal.changeTodo(
+        todoModel.id,
+        todoModel.text,
+        !todoModel.isDone, // оператор ! чтобы изменить положение чекбокса
+      );
+      return const Right(CheckboxResponse.checked);
     } catch (e) {
       return Left(DatabaseFailure());
     }
