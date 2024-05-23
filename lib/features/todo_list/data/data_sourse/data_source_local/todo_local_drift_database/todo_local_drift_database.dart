@@ -20,8 +20,25 @@ class TodoItems extends Table {
 @lazySingleton
 @DriftDatabase(tables: [TodoItems])
 class AppDatabase extends _$AppDatabase {
-  AppDatabase() : super(NativeDatabase.memory());
+  AppDatabase() : super(_openConnection());
 
   @override
   int get schemaVersion => 1;
+}
+
+LazyDatabase _openConnection() {
+  return LazyDatabase(() async {
+    final dbFolder = await getApplicationDocumentsDirectory();
+    final file = File(p.join(dbFolder.path, 'db.sqlite'));
+
+    if (Platform.isAndroid) {
+      await applyWorkaroundToOpenSqlite3OnOldAndroidVersions();
+    }
+
+
+    final cachebase = (await getTemporaryDirectory()).path;
+    sqlite3.tempDirectory = cachebase;
+
+    return NativeDatabase.createInBackground(file);
+  });
 }
